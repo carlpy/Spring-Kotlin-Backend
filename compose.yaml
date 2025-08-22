@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_spring_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: aeroTechDB
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  web_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kotlin_app
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
