@@ -12,20 +12,20 @@ data class Usuario(
     val idUsuario: Int = 0,
 
     @Column(nullable = false, length = 100)
-    val nombre: String,
+    var nombre: String,
 
     @Column(nullable = false, unique = true, length = 100)
-    val email: String,
+    var email: String,
 
     @Column(nullable = false, length = 100)
-    val password: String,
+    var password: String,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    val rol: RolesUsuario,
+    var rol: RolesUsuario,
 
     @Column(nullable = false)
-    val fechaCreacion: LocalDateTime = LocalDateTime.now(),
+    var fechaCreacion: LocalDateTime = LocalDateTime.now(),
 
     @OneToMany(mappedBy = "usuario")
     val reservas: List<Reserva> = emptyList()

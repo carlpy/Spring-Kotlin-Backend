@@ -15,7 +15,7 @@ data class Reserva(
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    val estado: EstadoReserva,
+    var estado: EstadoReserva,
 
     @ManyToOne @JoinColumn(name = "id_usuario", nullable = false)
     val usuario: Usuario,

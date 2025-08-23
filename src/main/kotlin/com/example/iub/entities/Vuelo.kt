@@ -12,20 +12,20 @@ data class Vuelo(
     val idVuelo: Int = 0,
 
     @Column(nullable = false, length = 100)
-    val origen: String,
+    var origen: String,
 
     @Column(nullable = false, length = 100)
-    val destino: String,
+    var destino: String,
 
     @Column(nullable = false)
-    val fecha: LocalDateTime,
+    var fecha: LocalDateTime,
 
     @Column(nullable = false, precision = 10, scale = 2)
     var precio: BigDecimal,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    val estado: EstadoVuelo,
+    var estado: EstadoVuelo,
 
     @ManyToOne @JoinColumn(name = "id_aeronave", nullable = false)
     val aeronave: Aeronave,
