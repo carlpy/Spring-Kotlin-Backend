@@ -1,33 +1,28 @@
 package com.example.iub.entities
 
+import com.example.iub.enums.EstadoReserva
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "reserva")
-class Reserva(
+@Table(name = "reservas")
+data class Reserva(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val idReserva: Int = 0,
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_reserva")
-    var idReserva: Long = 0,
-
-    @Column(name = "fecha_reserva", nullable = false)
-    var fechaReserva: LocalDateTime = LocalDateTime.now(),
+    @Column(nullable = false)
+    val fechaReserva: LocalDateTime,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    var estado: EstadoReserva,
+    val estado: EstadoReserva,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", nullable = false)
-    var usuario: Usuario,
+    @ManyToOne @JoinColumn(name = "id_usuario", nullable = false)
+    val usuario: Usuario,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_vuelo", nullable = false)
-    var vuelo: Vuelo
+    @ManyToOne @JoinColumn(name = "id_vuelo", nullable = false)
+    val vuelo: Vuelo,
+
+    @OneToMany(mappedBy = "reserva")
+    val pasajeros: List<Pasajero> = emptyList()
 )
-
-enum class EstadoReserva {
-    ACTIVA, CANCELADA
-}

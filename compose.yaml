@@ -17,6 +17,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: kotlin_app
+    environment:
+      SECURITY_JWT_SECRET: ${SECURITY_JWT_SECRET}
+      SECURITY_JWT_EXPIRATION: ${SECURITY_JWT_EXPIRATION}
     depends_on:
       - mysql
     ports:

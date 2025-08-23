@@ -1,12 +1,15 @@
 package com.example.iub.dto.responses
 
-data class VueloResponse (
-    val id: Long,
-    val numeroVuelo: String,
+import com.example.iub.enums.EstadoVuelo
+import java.math.BigDecimal
+import java.time.LocalDateTime
+
+data class VueloResponse(
+    val idVuelo: Int,
     val origen: String,
     val destino: String,
-    val fechaSalida: String,
-    val fechaLlegada: String,
-    val estado: String,
-    val aerolineaId: Long
+    val fecha: LocalDateTime,
+    val precio: BigDecimal,
+    val estado: EstadoVuelo,
+    val idAeronave: Int
 )

@@ -1,7 +1,7 @@
 package com.example.iub.services
 
-import com.example.iub.entities.EstadoVuelo
 import com.example.iub.entities.Vuelo
+import com.example.iub.enums.EstadoVuelo
 import com.example.iub.repositories.VueloRepository
 import com.example.iub.exceptions.VueloNotFoundException
 import org.springframework.stereotype.Service
@@ -20,14 +20,16 @@ class VueloService(private val vueloRepository: VueloRepository) {
 
     fun actualizar(id: Long, vuelo: Vuelo): Vuelo {
         val existente = obtenerPorId(id)
-        existente.origen = vuelo.origen
-        existente.destino = vuelo.destino
-        existente.fechaSalida = vuelo.fechaSalida
-        existente.fechaLlegada = vuelo.fechaLlegada
-        existente.precio = vuelo.precio
-        existente.estado = vuelo.estado
-        existente.aeronave = vuelo.aeronave
-        return vueloRepository.save(existente)
+
+        val updatedExistente = existente.copy(
+            origen = vuelo.origen,
+            destino = vuelo.destino,
+            fecha = vuelo.fecha,
+            precio = vuelo.precio,
+            estado = vuelo.estado,
+            aeronave = vuelo.aeronave
+        )
+        return vueloRepository.save(updatedExistente)
     }
 
     fun eliminar(id: Long) {
@@ -37,14 +39,16 @@ class VueloService(private val vueloRepository: VueloRepository) {
     // Actualizar estado de un vuelo
     fun actualizarEstado(id: Long, nuevoEstado: String): Vuelo {
         val vueloExiste = obtenerPorId(id)
+        var updatedVuelo: Vuelo? = null
         try {
             val estadoEnum = EstadoVuelo.valueOf(nuevoEstado.uppercase())
-            vueloExiste.estado = estadoEnum
+
+            updatedVuelo = vueloExiste.copy(estado = estadoEnum)
         } catch (e: IllegalArgumentException) {
             throw IllegalArgumentException(
                 "Estado inválido: $nuevoEstado. Valores permitidos: ${EstadoVuelo.values().joinToString(", ")}"
             )
         }
-        return vueloRepository.save(vueloExiste)
+        return vueloRepository.save(updatedVuelo)
     }
 }

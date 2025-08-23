@@ -19,10 +19,14 @@ class PasajeroService(private val pasajeroRepository: PasajeroRepository) {
 
     fun actualizar(id: Long, pasajero: Pasajero): Pasajero {
         val existente = obtenerPorId(id)
-        existente.nombre = pasajero.nombre
-        existente.documento = pasajero.documento
-        existente.edad = pasajero.edad
-        existente.reserva = pasajero.reserva
+
+        val updatedExistente = existente.copy(
+            nombre = pasajero.nombre,
+            documento = pasajero.documento,
+            edad = pasajero.edad,
+            reserva = pasajero.reserva
+        )
+
         return pasajeroRepository.save(existente)
     }
 

@@ -1,35 +1,33 @@
 package com.example.iub.entities
 
+import com.example.iub.enums.RolesUsuario
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
-@Entity
-@Table(name = "usuario")
-class Usuario(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_usuario")
-    var idUsuario: Long = 0,
+@Entity
+@Table(name = "usuarios")
+data class Usuario(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val idUsuario: Int = 0,
 
     @Column(nullable = false, length = 100)
-    var nombre: String,
+    val nombre: String,
 
     @Column(nullable = false, unique = true, length = 100)
-    var email: String,
+    val email: String,
 
     @Column(nullable = false, length = 100)
-    var password: String,
+    val password: String,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    var rol: RolUsuario,
+    val rol: RolesUsuario,
 
-    @Column(name = "fecha_creacion", nullable = false)
-    var fechaCreacion: LocalDateTime = LocalDateTime.now()
+    @Column(nullable = false)
+    val fechaCreacion: LocalDateTime = LocalDateTime.now(),
+
+    @OneToMany(mappedBy = "usuario")
+    val reservas: List<Reserva> = emptyList()
 )
-
-enum class RolUsuario {
-    ADMIN, CLIENTE, EMPLEADO
-}
 

@@ -19,10 +19,14 @@ class UsuarioService(private val usuarioRepository: UsuarioRepository) {
 
     fun actualizar(id: Long, usuario: Usuario): Usuario {
         val existente = obtenerPorId(id)
-        existente.nombre = usuario.nombre
-        existente.email = usuario.email
-        existente.password = usuario.password
-        existente.rol = usuario.rol
+
+        val updateExistente = existente.copy(
+            nombre = usuario.nombre,
+            email = usuario.email,
+            password = usuario.password,
+            rol = usuario.rol
+        )
+
         return usuarioRepository.save(existente)
     }
 

@@ -3,18 +3,18 @@ package com.example.iub.entities
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "aeronave")
-class Aeronave(
+@Table(name = "aeronaves")
+data class Aeronave(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val idAeronave: Int = 0,
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_aeronave")
-    var idAeronave: Long = 0,
-
-    @Column(nullable = false, length = 100)
-    var modelo: String,
+    @Column(nullable = false, length = 50)
+    val modelo: String,
 
     @Column(nullable = false)
-    var capacidad: Int
+    val capacidad: Int,
+
+    @OneToMany(mappedBy = "aeronave")
+    val vuelos: List<Vuelo> = emptyList()
 )
 

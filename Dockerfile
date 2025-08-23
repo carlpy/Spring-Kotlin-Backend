@@ -24,9 +24,6 @@ WORKDIR /app
 # Copy built jar from builder
 COPY --from=builder /app/build/libs/*.jar app.jar
 
-# Expose Spring Boot port
-EXPOSE 8080
-
 # JVM options (can be overridden with -e JAVA_OPTS)
 ENV JAVA_OPTS="-Xmx512m -Xms256m"
 

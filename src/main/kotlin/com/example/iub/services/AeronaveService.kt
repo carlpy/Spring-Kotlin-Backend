@@ -19,8 +19,11 @@ class AeronaveService(private val aeronaveRepository: AeronaveRepository) {
 
     fun actualizar(id: Long, aeronave: Aeronave): Aeronave {
         val existente = obtenerPorId(id)
-        existente.modelo = aeronave.modelo
-        existente.capacidad = aeronave.capacidad
+
+        val updated = existente.copy(
+            modelo = aeronave.modelo,
+            capacidad = aeronave.capacidad
+        )
         return aeronaveRepository.save(existente)
     }
 

@@ -1,7 +1,7 @@
 package com.example.iub.dto.responses
 
-data class AeronaveRequest(
-    val idAeronave: Long,
+data class AeronaveResponse(
+    val idAeronave: Int,
     val modelo: String,
-    val capacidad: Int
+    val capacidad: Int,
 )

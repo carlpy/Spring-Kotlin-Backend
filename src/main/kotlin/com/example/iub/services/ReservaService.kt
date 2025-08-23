@@ -19,10 +19,14 @@ class ReservaService(private val reservaRepository: ReservaRepository) {
 
     fun actualizar(id: Long, reserva: Reserva): Reserva {
         val existente = obtenerPorId(id)
-        existente.fechaReserva = reserva.fechaReserva
-        existente.estado = reserva.estado
-        existente.usuario = reserva.usuario
-        existente.vuelo = reserva.vuelo
+
+        val updatedExistente = existente.copy(
+            fechaReserva = reserva.fechaReserva,
+            estado = reserva.estado,
+            usuario = reserva.usuario,
+            vuelo = reserva.vuelo
+        )
+
         return reservaRepository.save(existente)
     }
 
