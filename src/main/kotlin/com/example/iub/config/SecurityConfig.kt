@@ -26,21 +26,19 @@ class SecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain =
         http
             .csrf { it.disable() }
-            .cors { it.configurationSource(corsSource()) }
-            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .exceptionHandling {
-                it.authenticationEntryPoint(unauthorizedEntryPoint())
-            }
             .authorizeHttpRequests {
                 it.requestMatchers(
                     "/auth/**",
-                    // optional developer tools you might want public (comment out if not needed):
-                    "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html"
+                    "/v3/api-docs/**",        // <-- allow OpenAPI JSON
+                    "/swagger-ui/**",         // <-- allow Swagger UI assets
+                    "/swagger-ui.html"        // <-- UI landing
                 ).permitAll()
                 it.anyRequest().authenticated()
             }
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
             .build()
+
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
